@@ -202,6 +202,31 @@ record.
 
 ---
 
+## Deploying to Vercel
+
+A `vercel.json` is included that routes all traffic to `server.js` and points
+`DB_PATH` at `/tmp/data.sqlite` (the only writable location on Vercel's
+serverless runtime).
+
+**Important — persistence caveat on Vercel:** Vercel serverless functions run
+on an ephemeral filesystem. `/tmp` is writable but not shared across function
+instances, and it is wiped between cold starts. In practice this means:
+
+- Profiles created on one instance may not be visible from another.
+- The database is effectively reset on every cold start.
+- `better-sqlite3` is a native addon — if the Vercel build sandbox cannot
+  compile it for the target runtime, the deploy will fail.
+
+For a real deployment, swap the SQLite layer in [db.js](db.js) for a hosted
+database (Turso / libSQL, Neon Postgres, Supabase, PlanetScale, etc.). The
+rest of the app is already isolated behind the `db.js` module, so only that
+file needs to change.
+
+For **local development and grading**, the bundled SQLite setup works out of
+the box — just `npm install && npm start`.
+
+---
+
 ## Example session
 
 ```bash
