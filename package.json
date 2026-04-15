@@ -1,0 +1,18 @@
+{
+    "name": "profile-intelligence-service",
+    "version": "1.0.0",
+    "description": "Enriches a name via Genderize, Agify, and Nationalize APIs, persists the profile, and exposes CRUD endpoints.",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "better-sqlite3": "^11.3.0",
+        "express": "^4.18.4",
+        "node-fetch": "^2.6.7",
+        "uuid": "^10.0.0"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
